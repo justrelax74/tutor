@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   document.getElementById("adminPanel").style.display = "block";
               }
           });
-      } 
+      }
   });
 });
 
@@ -498,62 +498,4 @@ document.getElementById('checkoutButton').addEventListener('click', async () => 
         alert(`Checkout failed! ${error.message}`);
     }
 });
-
-
-
-
-// Create and add the download button to the page
-function createDownloadButton() {
-  // Create button element
-  const downloadBtn = document.createElement('button');
-  downloadBtn.textContent = 'Download Backup';
-  downloadBtn.id = 'downloadBackupBtn';
   
-  // Add some basic styling
-  downloadBtn.style.position = 'fixed';
-  downloadBtn.style.bottom = '20px';
-  downloadBtn.style.right = '20px';
-  downloadBtn.style.padding = '10px 15px';
-  downloadBtn.style.backgroundColor = '#4CAF50';
-  downloadBtn.style.color = 'white';
-  downloadBtn.style.border = 'none';
-  downloadBtn.style.borderRadius = '5px';
-  downloadBtn.style.cursor = 'pointer';
-  downloadBtn.style.zIndex = '1000';
-
-  // Add click handler
-  downloadBtn.addEventListener('click', downloadLocalStorage);
-
-  // Add button to page
-  document.body.appendChild(downloadBtn);
-}
-
-// The download function you provided (improved)
-function downloadLocalStorage() {
-  try {
-    // Convert localStorage to JSON with nice formatting
-    const data = JSON.stringify(localStorage, null, 2);
-    const blob = new Blob([data], { type: "application/json" });
-    
-    // Create download link
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = `localStorageBackup_${new Date().toISOString().split('T')[0]}.json`;
-    
-    // Trigger download
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    
-    // Free up memory
-    URL.revokeObjectURL(a.href);
-    
-    console.log('LocalStorage backup downloaded');
-  } catch (error) {
-    console.error('Error downloading localStorage:', error);
-    alert('Failed to create backup. See console for details.');
-  }
-}
-
-// Initialize the button when page loads
-document.addEventListener('DOMContentLoaded', createDownloadButton);
